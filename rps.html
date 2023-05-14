@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Javascript</title>
+</head>
+<body>
+    <h2>Rock, paper and scissors game</h2>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+
+        body{
+            height: 100vh;
+            text-align: center;
+            background: linear-gradient(lightgreen, cyan);
+            justify-content: center;
+            align-items: center;
+        }
+        h2{
+            font-size: 45px;
+            text-align: center;
+        }
+        span{
+            font-size: 30px;
+            color: blue;
+        }
+        .i{
+            display: block;
+            margin-bottom: 20px;
+        }
+        #p2{
+            color: blue;
+        }
+        #btn{
+            width: 380px;
+            margin-top: 20px;
+            height: 50px;
+            border: none;
+            background-color: rgb(29, 82, 255);
+            border-radius: 20px;
+            font-size: 20px;
+            transition: 0.5s;
+            opacity: 75%;
+        }
+        #btn:hover{
+            width: 410px;
+        }
+        #btn:focus{
+            width: 400px;
+            opacity: 100%;
+        }
+        #txt{
+            border: 1px solid whitesmoke;
+            background-color: aqua;
+            transition: 2s;
+            width: 100px;
+            height: 35px;
+            text-align: center;
+            padding-left: 9px;
+            font-family: 'Poppins', sans-serif;
+            border-radius: 20px;
+        }
+        #txt:focus{
+            border: 4px solid black;
+        }
+        p{
+            font-size:  30px;
+        }
+        h3{
+            text-align: center;
+            color:rgb(29, 82, 255);
+        }
+        #txt:hover{
+            background-color: orange;
+            box-shadow: 0 0 0 2px greenyellow;
+        }
+    </style>
+    <div class="score">
+        <h3>Current Score: <span id="score">0</span></h3>
+    </div>
+    <div class="i">
+    <h3>
+        Welcome to rock paper and scissors game made by Sushant!
+    </h3>
+    <p class="p0">Select your input for Rock, Paper and Scissors</p><br><button id="txt" name="rock" onclick="return rock2();">Rock</button><button id="txt" onclick="return paper2()" style="margin-right: 5px; margin-left: 5px;" name="paper">Paper</button><button id="txt" name="scissors" onclick="return scissors2()">Scissors</button>
+    <br><button type="button" id="btn" onclick="return click1()">Press this button to continue</button>
+    <p id="p1"></p>
+    <p id="p2"></p>
+    </div>
+    <script>
+const array1 = ["Rock", "Paper", "Scissors"];
+var choice = array1[Math.floor(Math.random()*array1.length)].toLowerCase();
+var p1 = document.querySelector("#p1");
+const substring = "/" || "!" || "@" || "#" || "$" || "%" || "" || "^" || "&" || "*" || "(" || "_" || "-" || "+" || "=" || "}" || "{" || "]" || "[" || ";" || ":" || "<" || ">" || "?" || "'";
+var p2 = document.querySelector('#p2');
+var score = document.getElementById("score")
+function setCookie(name, value)
+  {
+    document.cookie=name + "=" + escape(value);
+  }
+function getCookie(cname) {
+  let name = cname + "=";
+  let ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+let wins = parseInt(sessionStorage.getItem("score")) || 0;
+console.log(typeof wins)
+score.innerHTML = parseInt(wins)
+var rock1;
+var paper1;
+var scissors1;
+function rock2(){ rock1 = 1; paper1 = 0; scissors1=0; }
+function paper2(){ paper1 = 1; scissors1 = 0; rock1=0; }
+function scissors2(){ scissors1 = 1; rock1 = 0; paper1 = 0; }
+function click1() {
+    if(rock1 == 1){
+        rock()
+    } else if(paper1 == 1){
+        paper()
+    } else if(scissors1 == 1){
+        scissors()
+    }
+    function victory(){
+        p1.innerHTML = "Computer choosed " + choice;
+        wins += 1
+        score.innerHTML = wins;
+        sessionStorage.setItem("score", wins)
+        p2.innerHTML = `You won!!\n\n <a href=""> Next </a>`
+    }
+    function defeat(){
+        p1.innerHTML = "Computer choosed " + choice
+        p2.innerHTML = "You lost!!\n\n <a href=''> Next </a>"
+        wins -= 1
+        score.innerHTML = wins;
+        sessionStorage.setItem("score", wins)
+    }
+
+    function tie(){
+        p1.innerHTML = "Computer choosed " + choice
+        p2.innerHTML = "Its a tie!!\n\n <a href=''> Next </a>"
+    }
+    function rock(){
+        if(choice=="rock"){
+            tie()
+        } else if(choice=="scissors"){
+        defeat()
+        } else if(choice=="paper"){
+        victory()
+        }
+    }
+    function paper(){
+        if(choice=="rock"){
+            defeat()
+        } else if(choice=="paper"){
+            tie()
+        } else if(choice=="scissors"){
+            victory()
+        }
+    }
+    function scissors(){
+        if(choice=="rock"){
+            victory()
+        } else if(choice=="paper"){
+            defeat()
+        } else if(choice=="scissors"){
+            tie()
+        }
+    }
+}
+</script>
+</body>
+</html>
